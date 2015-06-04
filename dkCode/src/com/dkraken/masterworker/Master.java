@@ -6,9 +6,9 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class Master {
+public class Master<T> {
 	// 任务队列
-	protected Queue<Object> workQueue = new ConcurrentLinkedQueue<Object>();
+	protected Queue<T> workQueue = new ConcurrentLinkedQueue<T>();
 	
 	// Worker进程队列
 	protected Map<String, Thread> threadMap = new HashMap<String, Thread>();
@@ -26,7 +26,7 @@ public class Master {
 	}
 	
 	// Master的构造，需要一个Worker进程逻辑，和需要的Worker进程数量
-	public Master(Worker worker,int countWorker){
+	public Master(Worker<T> worker,int countWorker){
 		worker.setWorkQueue(workQueue);
 		worker.setResultMap(resultMap);
 		for (int i = 0; i < countWorker; i++) {
@@ -35,7 +35,7 @@ public class Master {
 	}
 	
 	// 提交一个任务
-	public void submit(Object job){
+	public void submit(T job){
 		workQueue.add(job);
 	}
 	
