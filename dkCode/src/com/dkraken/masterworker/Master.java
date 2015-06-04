@@ -33,6 +33,12 @@ public class Master<T> {
 			threadMap.put(Integer.toString(i), new Thread(worker,Integer.toString(i)));
 		}
 	}
+	public Master(Worker<T> worker){
+		worker.setWorkQueue(workQueue);
+		worker.setResultMap(resultMap);
+		threadMap.put(Integer.toString(threadMap.size()), 
+				new Thread(worker,Integer.toString(threadMap.size())));
+	}
 	
 	// 提交一个任务
 	public void submit(T job){
